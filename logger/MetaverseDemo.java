@@ -10,7 +10,7 @@ public class MetaverseDemo {
     MetaverseLog log = new MetaverseLog();
     Random random = new Random();
     Set<String> pidList = new HashSet<>();
-    int n = 250000;
+    int n = 250;
     for (int i = 0; i < n; ++i) {
       String randomPid = String.valueOf((random.nextInt() % n));
       while (!pidList.add(randomPid)) {
@@ -19,9 +19,9 @@ public class MetaverseDemo {
       pidList.add(randomPid);
       log.start(randomPid);
       log.end(randomPid);
-//      System.out.println(log.getProcessMap().size() + " => " + log.getProcessMap());
-//      System.out.println(
-//          log.getProcessIdVsStartTime().size() + " => " + log.getProcessIdVsStartTime());
+      System.out.println(log.getProcessMap().size() + " => " + log.getProcessMap());
+      System.out.println(
+          log.getProcessIdVsStartTime().size() + " => " + log.getProcessIdVsStartTime());
       Thread.sleep(1);
     }
     while (!pidList.isEmpty()) {

@@ -1,17 +1,47 @@
 package fakru.lld.tictactoe;
 
 import fakru.lld.tictactoe.exceptions.InvalidPositionException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
   private final Board board;
+  private final List<Move> availableMoves;
 
   public Game() {
     board = new Board();
+    availableMoves = generateAllMoves();
   }
 
   public Board getBoard() {
     return board;
+  }
+
+  public List<Move> getAvailableMoves() {
+    return availableMoves;
+  }
+
+  private List<Move> generateAllMoves() {
+    List<Move> allPossibleMoves = new ArrayList<>();
+    for (int i = 1; i <= this.getBoard().getBoardLength(); ++i) {
+      for (int j = 1; j <= this.getBoard().getBoardHeight(); ++j) {
+        allPossibleMoves.add(new Move(i, j));
+      }
+    }
+    return allPossibleMoves;
+  }
+
+  public void removeUtilisedMove(Move move) {
+    this.getAvailableMoves().remove(move);
+  }
+
+  public boolean undoPreviousMove(List<Move> moves) {
+    int previousMoveIndex = moves.size() - 1;
+    Move previousMove = moves.get(previousMoveIndex);
+    this.getBoard().setPositionalValue(previousMove.getX(), previousMove.getY(), '*');
+    this.getAvailableMoves().add(previousMove);
+    return moves.remove(previousMove);
   }
 
   public boolean makeMove(Player p, Move move) {
